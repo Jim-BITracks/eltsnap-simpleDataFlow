@@ -2,7 +2,7 @@
     "name": "eltsnap-simple-data-flow",
     "displayName": "eltsnap: Simple Data Flow",
     "description": "",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "bitracks",
     "engines": {
         "vscode": "^1.48.0",
