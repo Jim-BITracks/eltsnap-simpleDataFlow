@@ -49,7 +49,7 @@ export class SimpleDF {
         let connections: Map<string,string> = new Map;
         availableConnections.forEach(element => {
             if (element.databaseName !== "master" && element.databaseName !== "model" && element.databaseName !== "msdb" && element.databaseName !== "tempdb" && element.authenticationType === 'Integrated' && element.providerId === "MSSQL") {
-                let connection_ = `Server=${element.serverName};Database=${element.databaseName};IntegratedSecurity=True;`;
+                let connection_ = `Server=${element.serverName};Database=${element.databaseName};Integrated Security=True;`;
 
                 connections.set(connection_, element.connectionId,);
                 
@@ -74,7 +74,7 @@ export class SimpleDF {
         } catch (error) 
         {
             azdata.window.closeDialog(this.dialog);
-            vscode.window.showWarningMessage("Note: Must first connecti to the Destination. Use the 'Side Bae' associated with 'Connections' in the 'Activity Bar'");
+            vscode.window.showWarningMessage("Note: Must first connect to the Destination. Use the 'Side Bar' associated with 'Connections' in the 'Activity Bar'");
 
             vscode.window.showErrorMessage(error.message);
             return[];
@@ -176,9 +176,9 @@ export class SimpleDF {
 
     private openDialog(): void {
 
-        let dialogTitle: string = 'eltsnap: Simple Data Flow';
+        let dialogTitle: string = 'eltsnap: Simple Dataflow';
         this.dialog = azdata.window.createModelViewDialog(dialogTitle);
-        let packagesTab = azdata.window.createTab('eltsnap: Simple Data Flow');
+        let packagesTab = azdata.window.createTab('eltsnap: Simple Dataflow');
 
         packagesTab.content = 'getpackage';
         this.dialog.content = [packagesTab];
@@ -206,7 +206,7 @@ export class SimpleDF {
         this.textBoxQuery = view.modelBuilder.inputBox().withProperties({editable: true,multiline: true, rows:3, values:['SELECT * FROM {select_table}' ]}).component();           
         this.dstSchema = view.modelBuilder.dropDown().withProperties({editable: true, values:[]}).component();           
         this.dstTable = view.modelBuilder.dropDown().withProperties({editable: true, values:[]}).component();           
-        this.dstTruncate = view.modelBuilder.dropDown().withProperties({values: ['Y','N']}).component();           
+        this.dstTruncate = view.modelBuilder.dropDown().withProperties({values: ['N','Y']}).component();           
 
 
         this.connectionNamesDestination.onValueChanged(e => {
@@ -290,7 +290,7 @@ export class SimpleDF {
                 components:[
                     
                             ],
-        title: "Define Data Flows Source and Destination"
+        title: "Define Dataflow Source and Destination"
             },
         ]
         ).component();
@@ -303,7 +303,7 @@ export class SimpleDF {
                 components:[
                     
                             ],
-        title: "Configure Data Flow"
+        title: "Configure Dataflow"
             },
         ]
         ).component();

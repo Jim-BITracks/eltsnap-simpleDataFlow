@@ -1,13 +1,16 @@
-<# $src_conn = "Server=localhost;Database=car_crash;Integrated Security=True;"
-$dest_conn = "Server=localhost;Database=car_crash;Integrated Security=True;"
-$src_sql_command = "SELECT * FROM [edw].[D_TIME]"
-$dst_schema = "edw"
-$dst_table = "D_TIME_copy"
-$dest_truncate = "Y"
- #>
+[CmdletBinding()]
+
+Param(
+    [string]$src_conn,
+    [string]$dest_conn,
+    [string]$src_sql_command,
+    [string]$dst_schema,
+    [string]$dst_table,
+    [string]$dest_truncate
+)
 
 
- 
+
 #new method for BulkCopy
 $source = 'namespace System.Data.SqlClient
 {
