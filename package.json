@@ -2,9 +2,9 @@
     "name": "eltsnap-simple-data-flow",
     "displayName": "eltsnap: Simple Data Flow",
     "description": "",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "bitracks",
-    "repository": "https://dev.azure.com/bi-tracks/_git/Simple%20Dataflow%20for%20ADS",
+    "repository": "https://github.com/konstantinmds/eltsnap-simpleDataFlow",
     "icon": "images/bitracks.png",
     "engines": {
         "vscode": "^1.48.0",

@@ -1,3 +1,3 @@
-eltsnap Dataflow
+eltsnap Dataflow 1
 
-![](images/eltsnapAdsGIF.gif)
+![extension demo](images/eltSnapGIF.gif)
