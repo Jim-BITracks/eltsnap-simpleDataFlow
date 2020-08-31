@@ -76,7 +76,7 @@ export class SimpleDF {
             azdata.window.closeDialog(this.dialog);
             vscode.window.showWarningMessage("Note: Must first connect to the Destination. Use the 'Side Bar' associated with 'Connections' in the 'Activity Bar'");
 
-            vscode.window.showErrorMessage(error.message);
+            //vscode.window.showErrorMessage(error.message);
             return[];
         }
 
@@ -92,7 +92,7 @@ export class SimpleDF {
         let provider: azdata.QueryProvider = azdata.dataprotocol.getProvider < azdata.QueryProvider > ("MSSQL", azdata.DataProviderType.QueryProvider);
         let defaultUri = await azdata.connection.getUriForConnection(conn);
 
-        let query = `SELECT TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA='${schema}'   ORDER by 1 DESC`;
+        let query = `SELECT TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA='${schema}' ORDER by 1 DESC`;
 
         var data;
         try 

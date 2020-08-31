@@ -4,7 +4,7 @@
 
 > Prerequisite: Requires **PowerShell Core** (Version 7+)
 
-![GIF](images/eltSnapGIF.gif)
+![GIF](https://raw.githubusercontent.com/Jim-BITracks/eltsnap-simpleDataFlow/master/images/eltSnapGIF.gif)
 
 Step by Step:
 
@@ -25,6 +25,10 @@ Contact us at: info@bitracks.com
 ## Website
 
 [BI Tracks](https://www.bitracks.com/) **10x** Acceleration for ELT/ETL: www.bitracks.com
+
+## Unknown Issues
+
+Can be raised here: https://github.com/Jim-BITracks/eltsnap-simpleDataFlow/issues
 
 ## License
 

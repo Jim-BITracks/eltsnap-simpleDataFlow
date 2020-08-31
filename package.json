@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "publisher": "bitracks",
     "repository": "https://github.com/Jim-BITracks/eltsnap-simpleDataFlow",
-    "icon": "images/bitracks.png",
+    "icon": "https://raw.githubusercontent.com/Jim-BITracks/eltsnap-simpleDataFlow/master/images/bitracks.png",
     "engines": {
         "vscode": "^1.48.0",
         "azdata": "*"
