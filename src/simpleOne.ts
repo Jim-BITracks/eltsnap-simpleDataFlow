@@ -211,11 +211,10 @@ export class SimpleDF {
         this.connectionNamesDestination.onValueChanged( async e => {
             this.currentConnId = this.connections.get(e.selected) as string;
 
-            this.dstSchema.values = [];
-            this.dstSchema.value = '';
+            await this.dstSchema.updateProperties({values: [], value: ''});
             
-            this.dstTable.values = [];
-            this.dstTable.value = '';
+
+            await this.dstTable.updateProperties({values: [], value: ''});
 
 
             this.getSchemas(this.currentConnId as string).then( (m) => this.dstSchema.values = m );
