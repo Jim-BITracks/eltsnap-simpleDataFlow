@@ -21,6 +21,8 @@ Step by Step:
 ## Support
 
 Contact us at: info@bitracks.com
+For more information on this extension, along with a detailed walk-through of integration options, you can reference 'Chapter 6' of the book [Hands-on Azure Data Studio](https://leanpub.com/hands-on-ads)
+
 
 ## Website
 

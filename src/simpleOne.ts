@@ -29,6 +29,8 @@ export class SimpleDF {
     private dstTable!: azdata.DropDownComponent;
     private dstTruncate!: azdata.DropDownComponent;
     private vsCodeContext: vscode.ExtensionContext;
+    private schema_: string;
+    private table_: string;
 
     private dialog!: azdata.window.Dialog;
 
@@ -39,6 +41,8 @@ export class SimpleDF {
         this.openDialog();
         this.connections = new Map();
         this.currentConnId = '';
+        this.schema_ ='';
+        this.table_ = '';
 
         
         
@@ -73,7 +77,7 @@ export class SimpleDF {
 
         } catch (error) 
         {
-            azdata.window.closeDialog(this.dialog);
+            //azdata.window.closeDialog(this.dialog);
             vscode.window.showWarningMessage("Note: Must first connect to the Destination. Use the 'Side Bar' associated with 'Connections' in the 'Activity Bar'");
 
             //vscode.window.showErrorMessage(error.message);
@@ -101,10 +105,6 @@ export class SimpleDF {
 
         } catch (error) 
         {
-            azdata.window.closeDialog(this.dialog);
-            vscode.window.showErrorMessage("Be carefull ! The choosen destination conection needs to be active in the Azure Data Studio");
-
-            vscode.window.showErrorMessage(error.message);
             return[];
         }
 
@@ -124,12 +124,12 @@ export class SimpleDF {
             'src_conn': this.connectionNamesSource.value as string,
             'dest_conn': this.connectionNamesDestination.value as string,
             'src_sql_command': this.textBoxQuery.value as string,
-            'dst_schema': this.dstSchema.value as string,
-            'dst_table': this.dstTable.value as string,
+            'dst_schema': this.schema_ as string,
+            'dst_table': this.table_ as string,
             'dest_truncate': this.dstTruncate.value as string
         }; 
 
-        if(commandMap.dest_conn === '' || commandMap.dst_schema ==='' || commandMap.dst_table === '' || commandMap.dest_truncate ==='' || commandMap.src_conn === '' || commandMap.src_sql_command === ''){
+        if(commandMap.dest_conn === '' || commandMap.dst_schema ==='' || commandMap.dst_schema === undefined || commandMap.dst_table === undefined || commandMap.dst_table === '' || commandMap.dest_truncate ==='' || commandMap.src_conn === '' || commandMap.src_sql_command === ''){
             vscode.window.showWarningMessage("Not all values are properly selected");
             return;
         }
@@ -204,17 +204,16 @@ export class SimpleDF {
         this.connectionNamesDestination = view.modelBuilder.dropDown().withProperties({values : connectionNames}).component();
 
         this.textBoxQuery = view.modelBuilder.inputBox().withProperties({editable: true,multiline: true, rows:3, values:['SELECT * FROM {select_table}' ]}).component();           
-        this.dstSchema = view.modelBuilder.dropDown().withProperties({editable: true, values:[]}).component();           
-        this.dstTable = view.modelBuilder.dropDown().withProperties({editable: true, values:[]}).component();           
+        this.dstSchema = view.modelBuilder.dropDown().withProperties({editable: true, values:[], fireOnTextChange: true}).component();           
+        this.dstTable = view.modelBuilder.dropDown().withProperties({editable: true, values:[], fireOnTextChange: true}).component();           
         this.dstTruncate = view.modelBuilder.dropDown().withProperties({values: ['N','Y']}).component();           
 
-
-        this.connectionNamesDestination.onValueChanged(e => {
+        this.connectionNamesDestination.onValueChanged( async e => {
             this.currentConnId = this.connections.get(e.selected) as string;
 
-            this.dstSchema.values= [];
-            this.dstSchema.value= '';
-
+            this.dstSchema.values = [];
+            this.dstSchema.value = '';
+            
             this.dstTable.values = [];
             this.dstTable.value = '';
 
@@ -228,9 +227,12 @@ export class SimpleDF {
             this.dstTable.values = [];
 
             this.getTables(this.currentConnId as string,e as string).then( (m) => this.dstTable.values = m );
-
+            this.schema_ = e;
         });
 
+        this.dstTable.onValueChanged(e => {
+            this.table_ =e;
+        });
 
         let formBuilder = view.modelBuilder.formContainer()
         .withFormItems([
