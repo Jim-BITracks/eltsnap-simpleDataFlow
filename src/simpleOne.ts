@@ -78,7 +78,7 @@ export class SimpleDF {
         } catch (error) 
         {
             //azdata.window.closeDialog(this.dialog);
-            vscode.window.showWarningMessage("Note: Must first connect to the Destination. Use the 'Side Bar' associated with 'Connections' in the 'Activity Bar'");
+            vscode.window.showWarningMessage("Note: Connect to Destination in Side Bar to see list of Tables and Schemas");
 
             //vscode.window.showErrorMessage(error.message);
             return[];
