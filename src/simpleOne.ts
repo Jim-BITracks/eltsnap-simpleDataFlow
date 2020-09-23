@@ -37,7 +37,6 @@ export class SimpleDF {
 
     constructor(context: vscode.ExtensionContext) {
         this.vsCodeContext = context;
-        this.getConnections();
         this.openDialog();
         this.connections = new Map();
         this.currentConnId = '';
@@ -48,19 +47,27 @@ export class SimpleDF {
         
     }
 
-    private async getConnections(): Promise < void > {
-        let availableConnections = await azdata.connection.getConnections(false);
+    private async getConnections(): Promise < Map<string,string> > {
+        let availableConnections = await azdata.connection.getConnections(true);
         let connections: Map<string,string> = new Map;
-        availableConnections.forEach(element => {
-            if (element.databaseName !== "master" && element.databaseName !== "model" && element.databaseName !== "msdb" && element.databaseName !== "tempdb" && element.authenticationType === 'Integrated' && element.providerId === "MSSQL") {
+    
+        
+        for (let index = 0; index < availableConnections.length; index++) {
+            const element = availableConnections[index];
+            if (element.databaseName !== "master" && element.databaseName !== "model" && element.databaseName !== "msdb" && element.databaseName !== "tempdb") {
                 let connection_ = `Server=${element.serverName};Database=${element.databaseName};Integrated Security=True;`;
-
-                connections.set(connection_, element.connectionId,);
-                
+                connections.set(connection_, element.connectionId);
             }
-        });
-        this.connections = connections;
+        }
+    
+        if (connections.size < 1 ) {
+            vscode.window.showWarningMessage(" You need to make a connecton to your database to be able to see or edit data!");   
+            return new Map<string, string>();
+        }
+    
+        return connections;
     }
+
 
 
 
@@ -198,6 +205,8 @@ export class SimpleDF {
     }
     
     private async getTabContent(view: azdata.ModelView, componentWidth: number): Promise < void > {
+        this.connections = await this.getConnections();
+        
         let connectionNames = Array.from(this.connections.keys());
         connectionNames.unshift('');
         this.connectionNamesSource = view.modelBuilder.dropDown().withProperties({ values : connectionNames}).component();
