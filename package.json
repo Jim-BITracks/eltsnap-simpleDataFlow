@@ -2,7 +2,7 @@
     "name": "eltsnap-simple-data-flow",
     "displayName": "eltsnap: Simple Data Flow",
     "description": "",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "bitracks",
     "repository": "https://github.com/Jim-BITracks/eltsnap-simpleDataFlow",
     "icon": "images/bitracks.png",

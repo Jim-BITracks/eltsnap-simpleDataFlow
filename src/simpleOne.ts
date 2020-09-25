@@ -48,7 +48,7 @@ export class SimpleDF {
     }
 
     private async getConnections(): Promise < Map<string,string> > {
-        let availableConnections = await azdata.connection.getConnections(true);
+        let availableConnections = await azdata.connection.getConnections(false);
         let connections: Map<string,string> = new Map;
     
         
